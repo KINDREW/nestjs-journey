@@ -6,30 +6,30 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateNinjasDto } from './dto/create-ninjas.dto';
 import { UpdateNinjasDto } from './dto/update-ninjas.dto';
+import { NinjasService } from './ninjas.service';
 
 @Controller('ninjas')
 export class NinjasController {
+  constructor(private readonly ninjaService: NinjasService) {} //injecting the services into the controller so you'll not need to call the service class everytime
+
   //Get: Fetch Ninjas
   @Get()
-  getNinja() {
-    return [];
+  getNinja(@Query('weapon') weapon?: 'stars' | 'nunchunks') {
+    return this.ninjaService.getNinjas(weapon);
   }
   //Get: Fetch  oneNinja
   @Get(':id')
   getOneNinja(@Param('id') id: string) {
-    return {
-      id,
-    };
+    return this.ninjaService.getOneNinja(+id); //the function is expecting a parameter of type number and the id is a string is we've got to cast it to a number hence the + before it
   }
   //POST:Create Ninja
   @Post()
   createNinja(@Body() createNinjasDto:CreateNinjasDto) {
-    return {
-      name: createNinjasDto.name,
-    };
+    return this.ninjaService.createNinja(createNinjasDto);
   }
   //PUT: Update Ninja
   @Put(':id')
@@ -37,18 +37,13 @@ export class NinjasController {
     @Param('id') id: string,
     @Body() updateNinjasDto: UpdateNinjasDto,
   ) {
-    return {
-      id,
-      name: updateNinjasDto,
-    };
+    return this.ninjaService.updateNinja(+id, updateNinjasDto);
   }
 
   //DELETE: Delete Ninja
   @Delete(':id')
   deleteNinja(@Param('id') id: string) {
-    return {
-      id,
-    };
+    return this.ninjaService.deleteNinja(+id);
   }
 }
 

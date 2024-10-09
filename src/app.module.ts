@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { NinjasModule } from './ninjas/ninjas.module';
 
 @Module({
-  imports: [],
+  imports: [NinjasModule],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -17,4 +18,11 @@ import - this is an array that contains other modules the module needs to functi
 controllers: this is an array of controllers that belong to the module
 providers: this is an array of services that can be used the controllers in the module or other services int he module
 exports: this is an array of providers that should be available to any module that imports the the module
+
+
+To create a module we use:
+
+nest generate module <module name> or
+nest g module <module name>
+
 */

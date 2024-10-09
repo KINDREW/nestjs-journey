@@ -19,10 +19,15 @@ export class NinjasService {
 
   getOneNinja(id: number) {
     const ninja = this.ninjas.find((ninja) => ninja.id === id);
+
+    if (!ninja) {
+      return 'No ninja Found';
+    }
+
     return ninja;
   }
 
-  createNinja(createNinjasDto:CreateNinjasDto){
+  createNinja(createNinjasDto: CreateNinjasDto) {
     const newNinja = {
       ...createNinjasDto,
       id: Date.now(),
@@ -51,3 +56,10 @@ export class NinjasService {
     return ninjaToBeRemoved;
   }
 }
+
+/*Providers are responsible for handling the business logic of your application
+Providers are used to group logic that can be shared across different parts of the application.
+Providers are part of NestJS’s dependency injection system, which means that NestJS will manage the lifecycle of these classes. This allows you to inject providers into other classes (like controllers or other services) without manually creating new instances.
+Provider is annotated with the @Injectable() decorator, which marks it as a provider that can be injected into other parts of the application.
+
+*/
